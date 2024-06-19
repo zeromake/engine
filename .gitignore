@@ -145,3 +145,5 @@ app.*.symbols
 
 # The gn-sdk from Chromium and managed by DEPS and gclient.
 /tools/fuchsia/gn-sdk
+/build
+/.xmake

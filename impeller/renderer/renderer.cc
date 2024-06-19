@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-#include "flutter/fml/trace_event.h"
+// #include "flutter/fml/trace_event.h"
 #include "impeller/renderer/command_buffer.h"
 #include "impeller/renderer/surface.h"
 
@@ -32,7 +32,7 @@ bool Renderer::IsValid() const {
 
 bool Renderer::Render(std::unique_ptr<Surface> surface,
                       const RenderCallback& render_callback) const {
-  TRACE_EVENT0("impeller", "Renderer::Render");
+  // TRACE_EVENT0("impeller", "Renderer::Render");
   if (!IsValid()) {
     return false;
   }
