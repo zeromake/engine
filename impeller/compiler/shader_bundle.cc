@@ -11,7 +11,7 @@
 #include "impeller/compiler/utilities.h"
 #include "impeller/runtime_stage/runtime_stage.h"
 #include "impeller/shader_bundle/shader_bundle_flatbuffers.h"
-#include "third_party/json/include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 
 namespace impeller {
 namespace compiler {

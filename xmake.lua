@@ -8,7 +8,35 @@ add_includedirs("..", ".")
 
 set_languages("c++17")
 
-add_requires("spirv_cross")
+add_requires("spirv_cross", "shaderc", "flatbuffers", "inja", "nlohmann_json")
+
+rule("flatc")
+    set_extensions(".fbs")
+    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
+        import("lib.detect.find_tool")
+        local flatc = find_tool("flatc")
+        local outdir = vformat(path.join("$(buildir)/flat_generate"))
+        batchcmds:mkdir(outdir)
+        batchcmds:vrunv(flatc.program, {
+            "-c",
+            "--no-prefix",
+            "--object-suffix",
+            "TT",
+            "--filename-suffix",
+            "_flatbuffers",
+            "-o",
+            outdir,
+            sourcefile,
+        })
+        batchcmds:show_progress(opt.progress, "${color.build.object}flatc %s", sourcefile)
+        batchcmds:add_depfiles(sourcefile)
+    end)
+
+target("impeller.fbs")
+    set_kind("object")
+    add_rules("flatc")
+    add_files("impeller/shader_bundle/*.fbs")
+    add_files("impeller/runtime_stage/*.fbs")
 
 target("impeller.base")
     set_kind("static")
@@ -42,8 +70,8 @@ target("impeller.renderer")
     add_files("impeller/renderer/*.cc|*_unittests.cc")
 
 target("impeller.compiler")
-    add_files("impeller/compiler/*.cc|*_unittests.cc")
-    add_packages("spirv_cross")
+    add_files("impeller/compiler/*.cc|*_unittests.cc|*_test.cc")
+    add_packages("spirv_cross", "shaderc", "flatbuffers", "inja", "nlohmann_json")
 -- target("renderer/backend")
 -- target("typographer")
 -- target("typographer/backends/stb")
