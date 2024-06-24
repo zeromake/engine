@@ -12,17 +12,17 @@
 #include "impeller/core/runtime_types.h"
 #include "impeller/core/shader_types.h"
 #include "impeller/runtime_stage/runtime_stage_flatbuffers.h"
-#include "runtime_stage_types_flatbuffers.h"
+#include "impeller/runtime_stage/runtime_stage_types_flatbuffers.h"
 
 namespace impeller {
 
 static RuntimeUniformType ToType(fb::UniformDataType type) {
   switch (type) {
-    case fb::UniformDataType::kFloat:
+    case fb::UniformDataType::UniformDataType_kFloat:
       return RuntimeUniformType::kFloat;
-    case fb::UniformDataType::kSampledImage:
+    case fb::UniformDataType::UniformDataType_kSampledImage:
       return RuntimeUniformType::kSampledImage;
-    case fb::UniformDataType::kStruct:
+    case fb::UniformDataType::UniformDataType_kStruct:
       return RuntimeUniformType::kStruct;
   }
   FML_UNREACHABLE();
@@ -30,11 +30,11 @@ static RuntimeUniformType ToType(fb::UniformDataType type) {
 
 static RuntimeShaderStage ToShaderStage(fb::Stage stage) {
   switch (stage) {
-    case fb::Stage::kVertex:
+    case fb::Stage::Stage_kVertex:
       return RuntimeShaderStage::kVertex;
-    case fb::Stage::kFragment:
+    case fb::Stage::Stage_kFragment:
       return RuntimeShaderStage::kFragment;
-    case fb::Stage::kCompute:
+    case fb::Stage::Stage_kCompute:
       return RuntimeShaderStage::kCompute;
   }
   FML_UNREACHABLE();

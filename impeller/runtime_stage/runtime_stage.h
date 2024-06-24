@@ -13,7 +13,7 @@
 
 #include "flutter/impeller/core/runtime_types.h"
 #include "impeller/core/shader_types.h"
-#include "runtime_stage_types_flatbuffers.h"
+#include "impeller/runtime_stage/runtime_stage_types_flatbuffers.h"
 
 namespace impeller {
 

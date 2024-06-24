@@ -10,7 +10,7 @@
 
 #include "flutter/fml/mapping.h"
 #include "impeller/compiler/types.h"
-#include "shader_bundle_flatbuffers.h"
+#include "impeller/shader_bundle/shader_bundle_flatbuffers.h"
 
 namespace impeller {
 namespace compiler {

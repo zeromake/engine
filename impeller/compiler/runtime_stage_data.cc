@@ -15,7 +15,7 @@
 
 #include "impeller/base/validation.h"
 #include "impeller/runtime_stage/runtime_stage_flatbuffers.h"
-#include "runtime_stage_types_flatbuffers.h"
+#include "impeller/runtime_stage/runtime_stage_types_flatbuffers.h"
 
 namespace impeller {
 namespace compiler {
@@ -33,11 +33,11 @@ void RuntimeStageData::AddShader(const std::shared_ptr<Shader>& data) {
 static std::optional<fb::Stage> ToStage(spv::ExecutionModel stage) {
   switch (stage) {
     case spv::ExecutionModel::ExecutionModelVertex:
-      return fb::Stage::kVertex;
+      return fb::Stage::Stage_kVertex;
     case spv::ExecutionModel::ExecutionModelFragment:
-      return fb::Stage::kFragment;
+      return fb::Stage::Stage_kFragment;
     case spv::ExecutionModel::ExecutionModelGLCompute:
-      return fb::Stage::kCompute;
+      return fb::Stage::Stage_kCompute;
     default:
       return std::nullopt;
   }
@@ -47,11 +47,11 @@ static std::optional<fb::Stage> ToStage(spv::ExecutionModel stage) {
 static std::optional<fb::Stage> ToJsonStage(spv::ExecutionModel stage) {
   switch (stage) {
     case spv::ExecutionModel::ExecutionModelVertex:
-      return fb::Stage::kVertex;
+      return fb::Stage::Stage_kVertex;
     case spv::ExecutionModel::ExecutionModelFragment:
-      return fb::Stage::kFragment;
+      return fb::Stage::Stage_kFragment;
     case spv::ExecutionModel::ExecutionModelGLCompute:
-      return fb::Stage::kCompute;
+      return fb::Stage::Stage_kCompute;
     default:
       return std::nullopt;
   }
@@ -62,11 +62,11 @@ static std::optional<fb::UniformDataType> ToUniformType(
     spirv_cross::SPIRType::BaseType type) {
   switch (type) {
     case spirv_cross::SPIRType::Float:
-      return fb::UniformDataType::kFloat;
+      return fb::UniformDataType::UniformDataType_kFloat;
     case spirv_cross::SPIRType::SampledImage:
-      return fb::UniformDataType::kSampledImage;
+      return fb::UniformDataType::UniformDataType_kSampledImage;
     case spirv_cross::SPIRType::Struct:
-      return fb::UniformDataType::kStruct;
+      return fb::UniformDataType::UniformDataType_kStruct;
     case spirv_cross::SPIRType::Boolean:
     case spirv_cross::SPIRType::SByte:
     case spirv_cross::SPIRType::UByte:
@@ -96,27 +96,27 @@ static std::optional<fb::InputDataType> ToInputType(
     spirv_cross::SPIRType::BaseType type) {
   switch (type) {
     case spirv_cross::SPIRType::Boolean:
-      return fb::InputDataType::kBoolean;
+      return fb::InputDataType::InputDataType_kBoolean;
     case spirv_cross::SPIRType::SByte:
-      return fb::InputDataType::kSignedByte;
+      return fb::InputDataType::InputDataType_kSignedByte;
     case spirv_cross::SPIRType::UByte:
-      return fb::InputDataType::kUnsignedByte;
+      return fb::InputDataType::InputDataType_kUnsignedByte;
     case spirv_cross::SPIRType::Short:
-      return fb::InputDataType::kSignedShort;
+      return fb::InputDataType::InputDataType_kSignedShort;
     case spirv_cross::SPIRType::UShort:
-      return fb::InputDataType::kUnsignedShort;
+      return fb::InputDataType::InputDataType_kUnsignedShort;
     case spirv_cross::SPIRType::Int:
-      return fb::InputDataType::kSignedInt;
+      return fb::InputDataType::InputDataType_kSignedInt;
     case spirv_cross::SPIRType::UInt:
-      return fb::InputDataType::kUnsignedInt;
+      return fb::InputDataType::InputDataType_kUnsignedInt;
     case spirv_cross::SPIRType::Int64:
-      return fb::InputDataType::kSignedInt64;
+      return fb::InputDataType::InputDataType_kSignedInt64;
     case spirv_cross::SPIRType::UInt64:
-      return fb::InputDataType::kUnsignedInt64;
+      return fb::InputDataType::InputDataType_kUnsignedInt64;
     case spirv_cross::SPIRType::Float:
-      return fb::InputDataType::kFloat;
+      return fb::InputDataType::InputDataType_kFloat;
     case spirv_cross::SPIRType::Double:
-      return fb::InputDataType::kDouble;
+      return fb::InputDataType::InputDataType_kDouble;
     case spirv_cross::SPIRType::Unknown:
     case spirv_cross::SPIRType::Void:
     case spirv_cross::SPIRType::Half:

@@ -11,7 +11,7 @@
 #include "flutter/fml/mapping.h"
 #include "impeller/compiler/types.h"
 #include "impeller/core/runtime_types.h"
-#include "runtime_stage_types_flatbuffers.h"
+#include "impeller/runtime_stage/runtime_stage_types_flatbuffers.h"
 #include "spirv_parser.hpp"
 
 namespace impeller {

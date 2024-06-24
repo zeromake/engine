@@ -42,11 +42,11 @@ static std::optional<fb::shaderbundle::ShaderStage> ToStage(
     spv::ExecutionModel stage) {
   switch (stage) {
     case spv::ExecutionModel::ExecutionModelVertex:
-      return fb::shaderbundle::ShaderStage::kVertex;
+      return fb::shaderbundle::ShaderStage::ShaderStage_kVertex;
     case spv::ExecutionModel::ExecutionModelFragment:
-      return fb::shaderbundle::ShaderStage::kFragment;
+      return fb::shaderbundle::ShaderStage::ShaderStage_kFragment;
     case spv::ExecutionModel::ExecutionModelGLCompute:
-      return fb::shaderbundle::ShaderStage::kCompute;
+      return fb::shaderbundle::ShaderStage::ShaderStage_kCompute;
     default:
       return std::nullopt;
   }
@@ -57,31 +57,31 @@ static std::optional<fb::shaderbundle::UniformDataType> ToUniformType(
     spirv_cross::SPIRType::BaseType type) {
   switch (type) {
     case spirv_cross::SPIRType::Boolean:
-      return fb::shaderbundle::UniformDataType::kBoolean;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kBoolean;
     case spirv_cross::SPIRType::SByte:
-      return fb::shaderbundle::UniformDataType::kSignedByte;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kSignedByte;
     case spirv_cross::SPIRType::UByte:
-      return fb::shaderbundle::UniformDataType::kUnsignedByte;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kUnsignedByte;
     case spirv_cross::SPIRType::Short:
-      return fb::shaderbundle::UniformDataType::kSignedShort;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kSignedShort;
     case spirv_cross::SPIRType::UShort:
-      return fb::shaderbundle::UniformDataType::kUnsignedShort;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kUnsignedShort;
     case spirv_cross::SPIRType::Int:
-      return fb::shaderbundle::UniformDataType::kSignedInt;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kSignedInt;
     case spirv_cross::SPIRType::UInt:
-      return fb::shaderbundle::UniformDataType::kUnsignedInt;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kUnsignedInt;
     case spirv_cross::SPIRType::Int64:
-      return fb::shaderbundle::UniformDataType::kSignedInt64;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kSignedInt64;
     case spirv_cross::SPIRType::UInt64:
-      return fb::shaderbundle::UniformDataType::kUnsignedInt64;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kUnsignedInt64;
     case spirv_cross::SPIRType::Half:
-      return fb::shaderbundle::UniformDataType::kHalfFloat;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kHalfFloat;
     case spirv_cross::SPIRType::Float:
-      return fb::shaderbundle::UniformDataType::kFloat;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kFloat;
     case spirv_cross::SPIRType::Double:
-      return fb::shaderbundle::UniformDataType::kDouble;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kDouble;
     case spirv_cross::SPIRType::SampledImage:
-      return fb::shaderbundle::UniformDataType::kSampledImage;
+      return fb::shaderbundle::UniformDataType::UniformDataType_kSampledImage;
     case spirv_cross::SPIRType::AccelerationStructure:
     case spirv_cross::SPIRType::AtomicCounter:
     case spirv_cross::SPIRType::Char:
@@ -101,27 +101,27 @@ static std::optional<fb::shaderbundle::InputDataType> ToInputType(
     spirv_cross::SPIRType::BaseType type) {
   switch (type) {
     case spirv_cross::SPIRType::Boolean:
-      return fb::shaderbundle::InputDataType::kBoolean;
+      return fb::shaderbundle::InputDataType::InputDataType_kBoolean;
     case spirv_cross::SPIRType::SByte:
-      return fb::shaderbundle::InputDataType::kSignedByte;
+      return fb::shaderbundle::InputDataType::InputDataType_kSignedByte;
     case spirv_cross::SPIRType::UByte:
-      return fb::shaderbundle::InputDataType::kUnsignedByte;
+      return fb::shaderbundle::InputDataType::InputDataType_kUnsignedByte;
     case spirv_cross::SPIRType::Short:
-      return fb::shaderbundle::InputDataType::kSignedShort;
+      return fb::shaderbundle::InputDataType::InputDataType_kSignedShort;
     case spirv_cross::SPIRType::UShort:
-      return fb::shaderbundle::InputDataType::kUnsignedShort;
+      return fb::shaderbundle::InputDataType::InputDataType_kUnsignedShort;
     case spirv_cross::SPIRType::Int:
-      return fb::shaderbundle::InputDataType::kSignedInt;
+      return fb::shaderbundle::InputDataType::InputDataType_kSignedInt;
     case spirv_cross::SPIRType::UInt:
-      return fb::shaderbundle::InputDataType::kUnsignedInt;
+      return fb::shaderbundle::InputDataType::InputDataType_kUnsignedInt;
     case spirv_cross::SPIRType::Int64:
-      return fb::shaderbundle::InputDataType::kSignedInt64;
+      return fb::shaderbundle::InputDataType::InputDataType_kSignedInt64;
     case spirv_cross::SPIRType::UInt64:
-      return fb::shaderbundle::InputDataType::kUnsignedInt64;
+      return fb::shaderbundle::InputDataType::InputDataType_kUnsignedInt64;
     case spirv_cross::SPIRType::Float:
-      return fb::shaderbundle::InputDataType::kFloat;
+      return fb::shaderbundle::InputDataType::InputDataType_kFloat;
     case spirv_cross::SPIRType::Double:
-      return fb::shaderbundle::InputDataType::kDouble;
+      return fb::shaderbundle::InputDataType::InputDataType_kDouble;
     case spirv_cross::SPIRType::Unknown:
     case spirv_cross::SPIRType::Void:
     case spirv_cross::SPIRType::Half:
