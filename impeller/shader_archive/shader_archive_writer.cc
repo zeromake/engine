@@ -86,11 +86,11 @@ bool ShaderArchiveWriter::AddShader(ArchiveShaderType type,
 constexpr fb::Stage ToStage(ArchiveShaderType type) {
   switch (type) {
     case ArchiveShaderType::kVertex:
-      return fb::Stage::kVertex;
+      return fb::Stage::Stage_kVertex;
     case ArchiveShaderType::kFragment:
-      return fb::Stage::kFragment;
+      return fb::Stage::Stage_kFragment;
     case ArchiveShaderType::kCompute:
-      return fb::Stage::kCompute;
+      return fb::Stage::Stage_kCompute;
   }
   FML_UNREACHABLE();
 }

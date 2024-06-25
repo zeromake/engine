@@ -15,11 +15,11 @@ namespace impeller {
 
 constexpr ArchiveShaderType ToShaderType(fb::Stage stage) {
   switch (stage) {
-    case fb::Stage::kVertex:
+    case fb::Stage::Stage_kVertex:
       return ArchiveShaderType::kVertex;
-    case fb::Stage::kFragment:
+    case fb::Stage::Stage_kFragment:
       return ArchiveShaderType::kFragment;
-    case fb::Stage::kCompute:
+    case fb::Stage::Stage_kCompute:
       return ArchiveShaderType::kCompute;
   }
   FML_UNREACHABLE();

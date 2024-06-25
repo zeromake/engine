@@ -22,33 +22,24 @@ add_requires(
     "abseil",
     "icu4c"
 )
+includes("rules/impellerc.lua")
+includes("rules/flatc.lua")
 
-rule("flatc")
-    set_extensions(".fbs")
-    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
-        import("lib.detect.find_tool")
-        local flatc = find_tool("flatc")
-        local sourcedir = path.directory(sourcefile)
-        local outdir = path.join(vformat("$(buildir)"), "flat_generate", sourcedir)
-        batchcmds:mkdir(outdir)
-        batchcmds:vrunv(flatc.program, {
-            "--cpp",
-            "--gen-object-api",
-            "--filename-suffix",
-            "_flatbuffers",
-            "-o",
-            outdir,
-            sourcefile,
-        })
-        batchcmds:show_progress(opt.progress, "${color.build.object}flatc %s", sourcefile)
-        batchcmds:add_depfiles(sourcefile)
-    end)
+target("impeller.imgui.shaders")
+    set_kind("object")
+    add_rules("impellerc", {
+        metal = false,
+        vulkan = true,
+    })
+    add_files("impeller/playground/imgui/*.frag")
+    add_files("impeller/playground/imgui/*.vert")
 
 target("impeller.fbs")
     set_kind("object")
     add_rules("flatc")
     add_files("impeller/shader_bundle/*.fbs")
     add_files("impeller/runtime_stage/*.fbs")
+    add_files("impeller/shader_archive/*.fbs")
 
 target("impeller.base")
     set_kind("static")
@@ -133,6 +124,12 @@ target("impeller.compiler")
     add_files("impeller/compiler/*.cc|*_unittests.cc|*_test.cc")
     add_deps("impeller.runtime_stage", "impeller.base", "fml")
     add_packages("spirv_cross", "shaderc", "spirv_tools", "glslang", "flatbuffers", "inja", "nlohmann_json")
+
+target("impeller.shader_archive")
+    add_files("impeller/shader_archive/*.cc|*_unittests.cc")
+    add_deps("impeller.base", "fml")
+    add_packages("flatbuffers")
+
 -- target("renderer/backend")
 -- target("typographer")
 -- target("typographer/backends/stb")
