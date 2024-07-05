@@ -3,9 +3,11 @@ rule("impellerc")
     on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
         import("lib.detect.find_tool")
         local enableOptions = {}
-        enableOptions.metal = target:extraconf("rules", "impellerc", "metal")
-        enableOptions.vulkan = target:extraconf("rules", "impellerc", "vulkan")
-        enableOptions.gles = target:extraconf("rules", "impellerc", "gles")
+        local name = target:extraconf("rules", "impellerc", "name")
+        enableOptions.metal = is_plat("macosx", "iphoneos")
+        enableOptions.vulkan = is_plat("macosx", "iphoneos", "windows", "linux")
+        enableOptions.gles = is_plat("macosx", "iphoneos", "windows", "linux")
+
         local targetdir = target:targetdir()
         local impellerc = find_tool('impeller.compiler', {paths=targetdir, check = '--help'})
         local sourcedir = path.directory(sourcefile)
@@ -31,9 +33,11 @@ rule("impellerc")
             if is_plat("macosx") then
                 table.insert(argv, '--metal-desktop')
                 table.insert(argv, '--defines=IMPELLER_TARGET_METAL_DESKTOP')
+                table.insert(argv, '----metal-version=2.1')
             else
                 table.insert(argv, '--metal-ios')
                 table.insert(argv, '--defines=IMPELLER_TARGET_METAL_IOS')
+                table.insert(argv, '----metal-version=2.4')
             end
             table.insert(argv, '--defines=IMPELLER_TARGET_METAL')
         elseif enableOptions.gles then

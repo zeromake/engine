@@ -27,10 +27,7 @@ includes("rules/flatc.lua")
 
 target("impeller.imgui.shaders")
     set_kind("object")
-    add_rules("impellerc", {
-        metal = false,
-        vulkan = true,
-    })
+    add_rules("impellerc", {name = "imgui"})
     add_files("impeller/playground/imgui/*.frag")
     add_files("impeller/playground/imgui/*.vert")
 
