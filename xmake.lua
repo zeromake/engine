@@ -20,8 +20,12 @@ add_requires(
     "inja",
     "nlohmann_json",
     "abseil",
-    "icu4c"
+    "icu4c",
+    "glfw3",
+    "vulkan_memory_allocator",
+    "vulkan-headers"
 )
+add_requires("imgui", {configs={backend="none", freetype=true}})
 includes("rules/impellerc.lua")
 includes("rules/flatc.lua")
 
@@ -68,7 +72,23 @@ target("impeller.entity")
     add_files("impeller/entity/geometry/*.cc|*_unittests.cc")
 target("impeller.renderer")
     set_kind("static")
+    add_packages(
+        "vulkan_memory_allocator",
+        "vulkan-headers"
+    )
     add_files("impeller/renderer/*.cc|*_unittests.cc")
+    -- add_files("impeller/renderer/backend/gles/*.cc")
+    if is_plat("macosx", "iphoneos") then
+        add_files("impeller/renderer/backend/metal/*.mm|*_unittests.mm")
+        add_defines("DISABLE_MTL_SUPPORTS_TEXTURE_COMPRESSION")
+    end
+    -- add_files("impeller/renderer/backend/vulkan/*.cc|*_unittests.cc")
+    -- add_files("impeller/renderer/backend/vulkan/swapchain/*.cc|*_unittests.cc")
+    -- add_files("impeller/renderer/backend/vulkan/swapchain/khr/*.cc|*_unittests.cc")
+    -- if is_plat("android") then
+    --     add_files("impeller/renderer/backend/vulkan/android/*.cc|*_unittests.cc")
+    --     add_files("impeller/renderer/backend/vulkan/swapchain/ahb/*.cc|*_unittests.cc")
+    -- end
 
 target("fml")
     set_kind("static")
@@ -126,6 +146,21 @@ target("impeller.shader_archive")
     add_files("impeller/shader_archive/*.cc|*_unittests.cc")
     add_deps("impeller.base", "fml")
     add_packages("flatbuffers")
+
+target("impeller.imgui_backend")
+    set_kind("static")
+    add_packages(
+        "flatbuffers",
+        "imgui",
+        "glfw3"
+    )
+    add_includedirs("build/impellerc_generate")
+    add_files("impeller/playground/imgui/*.cc")
+    add_files("impeller/playground/backend/gles/*.cc|*_utilities.cc")
+    add_files("impeller/playground/backend/vulkan/*.cc|*_utilities.cc")
+    if is_plat("macosx") then
+        add_files("impeller/playground/backend/metal/*.mm")
+    end
 
 -- target("renderer/backend")
 -- target("typographer")

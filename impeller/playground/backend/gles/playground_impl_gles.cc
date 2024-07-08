@@ -11,7 +11,7 @@
 #endif
 
 #define GLFW_INCLUDE_NONE
-#include "third_party/glfw/include/GLFW/glfw3.h"
+#include "GLFW/glfw3.h"
 
 #include "flutter/fml/build_config.h"
 #include "impeller/entity/gles/entity_shaders_gles.h"

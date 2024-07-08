@@ -7,7 +7,7 @@
 
 #include <memory>
 
-#include "third_party/imgui/imgui.h"
+#include "imgui/imgui.h"
 
 namespace impeller {
 

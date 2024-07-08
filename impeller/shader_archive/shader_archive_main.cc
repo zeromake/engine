@@ -12,6 +12,16 @@ namespace impeller {
 
 bool Main(const fml::CommandLine& command_line) {
   ShaderArchiveWriter writer;
+  if (command_line.HasOption("help")) {
+    std::cout << "Usage: shader_archive [options]" << std::endl;
+    std::cout << "Options:" << std::endl;
+    std::cout << "  --input=<path>    Path to a shader file to include in the "
+                 "archive."
+              << std::endl;
+    std::cout << "  --output=<path>   Path to write the shader archive to."
+              << std::endl;
+    return true;
+  }
 
   std::string output;
   if (!command_line.GetOptionValue("output", &output)) {

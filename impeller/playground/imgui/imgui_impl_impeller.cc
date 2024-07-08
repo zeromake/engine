@@ -15,7 +15,7 @@
 #include "impeller/geometry/vector.h"
 #include "impeller/playground/imgui/imgui_raster.frag.h"
 #include "impeller/playground/imgui/imgui_raster.vert.h"
-#include "third_party/imgui/imgui.h"
+#include "imgui/imgui.h"
 
 #include "impeller/core/allocator.h"
 #include "impeller/core/formats.h"

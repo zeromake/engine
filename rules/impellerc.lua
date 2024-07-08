@@ -1,52 +1,21 @@
 rule("impellerc")
     set_extensions(".frag", ".vert", ".comp")
-    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
+    on_buildcmd_files(function (target, batchcmds, sourcebatch, opt)
         import("lib.detect.find_tool")
-        local enableOptions = {}
-        local name = target:extraconf("rules", "impellerc", "name")
-        enableOptions.metal = is_plat("macosx", "iphoneos")
-        enableOptions.vulkan = is_plat("macosx", "iphoneos", "windows", "linux")
-        enableOptions.gles = is_plat("macosx", "iphoneos", "windows", "linux")
-
         local targetdir = target:targetdir()
-        local impellerc = find_tool('impeller.compiler', {paths=targetdir, check = '--help'})
-        local sourcedir = path.directory(sourcefile)
-        local sourcefilename = path.filename(sourcefile)
+        local sourcedir = path.directory(sourcebatch.sourcefiles[1])
+        local name = target:extraconf("rules", "impellerc", "name")
         local outdir = path.join(vformat("$(buildir)"), "impellerc_generate", sourcedir)
-        batchcmds:mkdir(outdir)
-        local spirv_intermediate_path = path.join(outdir, sourcefilename .. ".spv")
-        local sl_output_path = path.join(outdir, sourcefilename)
-        local argv = {
-            '--input='..sourcefile,
-            '--spirv='..spirv_intermediate_path,
-            '--reflection-json='..path.join(outdir, sourcefilename)..'.json',
-            '--reflection-header='..path.join(outdir, sourcefilename)..'.h',
-            '--reflection-cc='..path.join(outdir, sourcefilename)..'.cc',
-            '--include=impeller/compiler/shader_lib'
+        local options = {
+            targetdir = targetdir,
+            dir = outdir,
+            metal = is_plat("macosx", "iphoneos"),
+            vulkan = is_plat("macosx", "iphoneos", "windows", "linux"),
+            gles = is_plat("macosx", "iphoneos", "windows", "linux"),
+            batchcmds = batchcmds,
+            name = name or target:name(),
         }
-        if enableOptions.vulkan then
-            sl_output_path = sl_output_path .. ".vkspv"
-            table.insert(argv, '--vulkan')
-            table.insert(argv, '--defines=IMPELLER_TARGET_VULKAN')
-        elseif enableOptions.metal then
-            sl_output_path = sl_output_path .. ".metal"
-            if is_plat("macosx") then
-                table.insert(argv, '--metal-desktop')
-                table.insert(argv, '--defines=IMPELLER_TARGET_METAL_DESKTOP')
-                table.insert(argv, '----metal-version=2.1')
-            else
-                table.insert(argv, '--metal-ios')
-                table.insert(argv, '--defines=IMPELLER_TARGET_METAL_IOS')
-                table.insert(argv, '----metal-version=2.4')
-            end
-            table.insert(argv, '--defines=IMPELLER_TARGET_METAL')
-        elseif enableOptions.gles then
-            sl_output_path = sl_output_path .. ".gles"
-            table.insert(argv, '--opengl-es')
-            table.insert(argv, '--defines=IMPELLER_TARGET_OPENGLES')
-        end
-        table.insert(argv, '--sl='..sl_output_path)
-        batchcmds:vrunv(impellerc.program, argv)
-        batchcmds:show_progress(opt.progress, "${color.build.object}impellerc %s -> %s", sourcefile, sl_output_path)
-        batchcmds:add_depfiles(sourcefile)
+        batchcmds:mkdir(outdir)
+        import("shaders")(sourcebatch.sourcefiles, options)
+        batchcmds:add_depfiles(sourcebatch.sourcefiles)
     end)

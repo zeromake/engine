@@ -81,9 +81,11 @@ static bool SupportsLossyTextureCompression(id<MTLDevice> device) {
 #ifdef FML_OS_IOS_SIMULATOR
   return false;
 #else
+#ifndef DISABLE_MTL_SUPPORTS_TEXTURE_COMPRESSION
   if (@available(macOS 10.15, iOS 13, tvOS 13, *)) {
     return [device supportsFamily:MTLGPUFamilyApple8];
   }
+#endif
   return false;
 #endif
 }
@@ -205,12 +207,14 @@ std::shared_ptr<Texture> AllocatorMTL::OnCreateTexture(
   mtl_texture_desc.storageMode = ToMTLStorageMode(
       desc.storage_mode, supports_memoryless_targets_, supports_uma_);
 
+#ifndef DISABLE_MTL_SUPPORTS_TEXTURE_COMPRESSION
   if (@available(macOS 12.5, ios 15.0, *)) {
     if (desc.compression_type == CompressionType::kLossy &&
         SupportsLossyTextureCompression(device_)) {
       mtl_texture_desc.compressionType = MTLTextureCompressionTypeLossy;
     }
   }
+#endif
 
   auto texture = [device_ newTextureWithDescriptor:mtl_texture_desc];
   if (!texture) {
